@@ -1,4 +1,4 @@
-FROM node:latest as builder
+FROM node:12.22.9 as builder
 
 RUN mkdir -p /app
 
@@ -7,6 +7,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
+RUN npm install -g @angular/cli
 RUN npm run build --prod
 
 CMD ["npm", "start"]
