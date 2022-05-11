@@ -1,0 +1,14 @@
+replicaCount: 3
+
+image:
+  repository: angular-app:latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  targetport: 80
+  name: angular-k8s-service
+
+container:
+  name: angular-k8s-deployment

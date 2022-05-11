@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.service.name}}
+  labels:
+      {{- include "helm-charts.labels" . | nindent 4}}
+spec:
+  ports:
+    - nodePort: 30170 # make the service available to network requests from external clients
+      port: {{.Values.service.port}}        # access the service via external port no
+      targetPort: {{.Values.service.targetport}}  # port number that container listening on
+      protocol: TCP
+  selector:
+    {{- include "helm-charts.selectorLabels" . | nindent 4}}
+  type: NodePort     # which expose the application on a port across each of your nodes
