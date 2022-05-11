@@ -6,7 +6,6 @@ metadata:
       {{- include "helm-charts.labels" . | nindent 4}}
 spec:
   ports:
-    - nodePort: 30170 # make the service available to network requests from external clients
       port: {{.Values.service.port}}        # access the service via external port no
       targetPort: {{.Values.service.targetport}}  # port number that container listening on
       protocol: TCP
