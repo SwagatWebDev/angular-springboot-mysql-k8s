@@ -3,12 +3,13 @@ kind: Service
 metadata:
   name: {{.Values.service.name}}
   labels:
-      {{- include "helm-charts.labels" . | nindent 4}}
+  {{- include "helm-charts.labels" . | nindent 4}}
 spec:
   ports:
-      port: {{.Values.service.port}}        # access the service via external port no
-      targetPort: {{.Values.service.targetport}}  # port number that container listening on
-      protocol: TCP
+  - nodePort: 30170
+    port: {{.Values.service.port}}        # access the service via external port no
+    targetPort: {{.Values.service.targetport}}  # port number that container listening on
+    protocol: TCP
   selector:
-    {{- include "helm-charts.selectorLabels" . | nindent 4}}
+  {{- include "helm-charts.selectorLabels" . | nindent 4}}
   type: {{.Values.service.type}}     # which expose the application on a port across each of your nodes

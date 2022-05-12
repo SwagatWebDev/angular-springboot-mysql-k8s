@@ -1,0 +1,123 @@
+Helm Package Manage
+--------------------
+2. Download Helm
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+The tool will be downloaded and installed.
+In the case you want to verify that
+# which helm
+Now you can see helm is available in my kubernetes cluster.
+
+So what is Helm
+# helm --help
+Exactly you can see the complete information about the Helm.
+See the first
+The Kubernetes package manager
+So see bellow how do you search it, how do you download it
+how do you install, how do you check this
+then you can see the environment variable bellow
+You can also see for the table which showing
+In Linux OS what is the Cache path, Configuration Path and Data Path. Similarly, for mac and windows you can see.
+Then you can see the helm commands over here like available commands
+
+3. Bellow is the official side you can go through this you will get lots of information
+-> https://helm.sh/docs/intro/install/
+Similar way in the case if you want to install in mac you can use the Homebrew option.
+
+4. For repository search in google Helm Chart Repository
+Inside that you can see what are the package are available
+The Chart Repository Guide over here
+If you scroll down here you can see small example here of chart Repository structure
+Lets do in command line guys, its better option what i think
+To add a repository say
+# helm repo add bitnami https://charts.bitnami.com/bitnami
+execute it then search bitnami
+# helm search repo bitnami
+so in this particular repository whatever packages are available
+you can directly go ahead and use it.
+
+5. Let's see a small example called tomcat
+The tomcat deployment
+A ready-made code is available for you,
+you don't have to worry about creating yml files
+doing the deployments, exposing the deployments
+Here everything packaged together
+You can see so many packages are available here, starting from A to Z options
+See nginx package
+remember you don't need to worry about coding part and deployment part nothing
+let me first update my helm repository by saying
+#helm repo update
+
+6. Now let say
+# kubectl get pods
+clean all pods, deploy and svc. clear it everything.
+Remember lots of repository are available we are taking bitnami which is one of them
+# helm search repo bitnami
+see nginx package you see something called chart here
+
+7. What is chart here
+Chart is nothing but
+combination of deployments + services + storage + networks
+all this into a single chart
+The complete configuration of your deployment of your application
+All the coding are under one chart only
+
+8. Now no need to worry doing all this by dry run like json
+creating deployments, exposing service object and all that
+no more creating,
+I am using ready-made code
+#helm install bitnami/nginx --generate-name
+-> generate-name if you give it will generate random name using helm
+else you can specify any name
+once you press enter
+you can see the following command what to do for exposing nginx deployment
+
+9. # helm list
+You can see what all deployments have been done, in what namespace, in what chart version
+# helm status nginx-2132343f
+to check the status
+Now say
+#kubectl get pods
+#kubectl get svc
+Here external ip you can see pending option
+to do that you need to run certain commands as mentioned above while executing the command
+# helm status nginx-2132343f
+
+10. All the ready-made code is available in helm Chart
+similarly like hub.docker.com
+which is a public place for ready-made docker images
+similarly for Kubernetes there is something called Helm
+Which is exactly called as a package manager
+where you got some ready-made deployment can be done using Helm Repository
+currently we used one repo called bitnami right
+like that you got so many repository in public world.
+
+11. You can check
+#kubectl get pods -o wide
+You can see the IP
+# curl use the IP
+You can see nginx homepage
+Like that you can take from helm chart do your deployments easily
+
+12. Use bitnami repository as in stable version lots of packages are got deprecated
+You guys can explore more options, and you can check each and everything before you deploy
+then you can go ahead and implement the deployments, without writing a single lines of codes
+This can be done with the help of kubernetes package manager called Helm
+with the help of charts all automated deployments you can do on the cluster
+so that you can have high availability, self-healing, fault tolerance all that you can expect.
+
+To create a Helm Chart:
+Inside your project
+1. helm create helm-charts
+2. helm template angular-k8s-deployment ./helm-charts
+3. helm template angular-k8s-deployment ./helm-charts >angular-k8s-deployment.yaml
+4. helm install angular-k8s-deployment helm-charts/
+5. helm list
+6. kubectl get all
+
+with this all of you we have completed kubernetes
+In the coming class will concentrate monitoring solution for your infrastructure
+will talk about Prometheus and grafana.
+will compare with other monitoring tool like Nagios, ELK Stack, Splunk
+After that will talk about one more provisioning tool called Terraform
+we will concentrate more on Terraform ok.
+Like how to automate provisioning infrastructure

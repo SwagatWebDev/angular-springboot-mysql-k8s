@@ -5,12 +5,12 @@ metadata:   # Data that helps  uniquely identify the object (using name, UID and
 spec:  # What state you desire for the object
   selector:  # The selector field defines how the deployment finds which pod to manage
     matchLabels:
-      {{- include "helm-charts.selectorLabels" . | nindent 6}}
+  {{- include "helm-charts.selectorLabels" . | nindent 6}}
   replicas: {{.Values.replicaCount}}  # Tells the deployment to run 3 pods matching the template
   template:
     metadata:
       labels:  # Labels are used as identifying attributes for objects such as pods and replication controller.
-        {{- include "helm-charts.labels" . | nindent 8}}
+    {{- include "helm-charts.labels" . | nindent 8}}
     spec:
       containers:
         - name: {{.Values.container.name}}
