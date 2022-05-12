@@ -8,6 +8,7 @@ service:
   type: NodePort
   port: 80
   targetport: 80
+  nodePort: 30170
   name: angular-k8s-service
 
 container:
