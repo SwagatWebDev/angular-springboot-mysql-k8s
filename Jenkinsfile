@@ -8,8 +8,8 @@ pipeline {
     stages {
        stage('Maven Build' ) {
             steps {
-                echo 'SpringBoot CRUD Application Maven Build'
-                sh 'cd angular8-crud-demo-master'
+                echo 'Maven Build'
+                sh 'cd springboot-angular-kubernetes-master'
                 sh "mvn clean install"
                 sh "mvn package"
                 archiveArtifacts 'target/*.jar'
