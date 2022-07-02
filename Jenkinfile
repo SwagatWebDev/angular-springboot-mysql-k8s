@@ -2,18 +2,10 @@ pipeline {
     agent any
 
     tools {
-        nodejs "my-nodejs"
         maven "my-maven"
     }
 
     stages {
-        stage('Install NPM Dependency') {
-            steps {
-                echo 'Angular Test Project npm Install'
-                sh 'cd angular8-crud-demo-master'
-                sh "npm install"
-            }
-        }
         stage('NPM Build') {
             steps {
                 echo 'Angular Test Project Prod Build'
