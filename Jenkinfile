@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs "my-nodejs"
+        maven "my-maven"
+    }
+
+    stages {
+        stage('Install NPM Dependency') {
+            steps {
+                echo 'Angular Test Project npm Install'
+                sh 'cd angular8-crud-demo-master'
+                sh "npm install"
+            }
+        }
+        stage('NPM Build') {
+            steps {
+                echo 'Angular Test Project Prod Build'
+                sh 'cd angular8-crud-demo-master'
+                sh 'npx ng build --prod --base-href=/angular-test-code/ && cd dist/angular-test-code && jar -cvf angular-test-code.war *'
+            }
+        }
+       stage('Maven Build' ) {
+            steps {
+                echo 'SpringBoot CRUD Application Maven Build'
+                sh 'cd angular8-crud-demo-master'
+                sh "mvn clean install"
+                sh "mvn package"
+                archiveArtifacts 'target/*.jar'
+            }
+        }
+    }
+}
