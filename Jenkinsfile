@@ -8,12 +8,14 @@ pipeline {
 
     stages {
 
-       stage('NPM Build') {
+       stage('Angular Build Docker Image') {
            steps {
-               dir("${env.WORKSPACE}/angular8-crud-demo-master") {
-                    echo 'Angular Project Build'
-                    sh 'npx ng build --prod --base-href=/angular-test-code/ && cd dist/angular-test-code && jar -cvf angular-test-code.war *'
+            dir("${env.WORKSPACE}/angular8-crud-demo-master") {
+                script {
+                    echo 'Angular Application Build Docker Image'
+                    sh 'docker build -t swagatkm/angular-app:latest .'
                    }
+                 }
                }
            }
        stage('Maven Build' ) {
