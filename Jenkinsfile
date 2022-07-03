@@ -19,8 +19,8 @@ pipeline {
 
        stage('Angular Docker Image Push') {
            steps {
+               container('kaniko') {
                dir("${env.WORKSPACE}/angular8-crud-demo-master") {
-                   container('kaniko') {
                      script {
                        sh '''
                        /kaniko/executor --dockerfile `pwd`/Dockerfile \
@@ -41,6 +41,21 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
             }
+        }
+       stage('SpringBoot Docker Image Push') {
+             steps {
+                 container('kaniko') {
+                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+                       script {
+                         sh '''
+                         /kaniko/executor --dockerfile `pwd`/Dockerfile \
+                                          --context `pwd` \
+                                          --destination=swagatkm/springboot-k8s-deployment:latest
+                         '''
+                         }
+                     }
+                 }
+             }
         }
     }
 }
