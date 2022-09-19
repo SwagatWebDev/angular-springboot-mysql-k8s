@@ -6,13 +6,13 @@ metadata:
     name: springboot-k8s-mysql
 spec:
   ports:
-    - name: http
-      port: 80      
-      targetPort: 8085 
+    - nodePort: 30163 
+      port: 8080      
+      targetPort: 8080  
       protocol: TCP
   selector:           
     app: springboot-k8s-mysql
-  type: LoadBalancer       
+  type: NodePort       
 
 ---
 apiVersion: apps/v1 
@@ -33,7 +33,7 @@ spec:
         - name: springboot-k8s-mysql
           image: 120761001082.dkr.ecr.us-east-2.amazonaws.com/angular-springboot-repo
           ports:
-            - containerPort: 8085              
+            - containerPort: 8080                
           env:   # Setting Enviornmental Variables
           - name: DB_HOST   # Setting Database host address from configMap
             valueFrom: 
