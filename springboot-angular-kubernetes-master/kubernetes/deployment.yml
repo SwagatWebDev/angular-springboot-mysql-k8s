@@ -6,13 +6,13 @@ metadata:
     name: springboot-k8s-mysql
 spec:
   ports:
-    - nodePort: 30163 
+    - name: http
       port: 8080      
       targetPort: 8080  
       protocol: TCP
   selector:           
     app: springboot-k8s-mysql
-  type: NodePort       
+  type: LoadBalancer       
 
 ---
 apiVersion: apps/v1 
@@ -55,3 +55,4 @@ spec:
               secretKeyRef:
                 name: db-credentials
                 key: password     
+
