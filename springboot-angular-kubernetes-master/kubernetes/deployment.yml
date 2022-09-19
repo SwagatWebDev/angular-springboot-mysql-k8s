@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: springboot-k8s-mysql
-          image: swagatkm/springboot-k8s-deployment:latest
+          image: 120761001082.dkr.ecr.us-east-2.amazonaws.com/angular-springboot-repo
           ports:
             - containerPort: 8080                
           env:   # Setting Enviornmental Variables
