@@ -1,42 +1,36 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: springboot-app
-  name: springboot-app
-spec:
-  replicas: 4
-  selector:
-    matchLabels:
-      app: springboot-app
-  template:
-    metadata:
-      labels:
-        app: springboot-app
-    spec:
-      containers:
-        - name: my-springboot-app
-          image: 120761001082.dkr.ecr.us-east-2.amazonaws.com/angular-springboot-repo
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8085
-              name: http
-              protocol: TCP
-# service type loadbalancer
----
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
+  name: springboot-k8s-mysql
   labels:
-    app: springboot-app
-    k8s-app: springboot-app
-  name: springboot-app
+    name: springboot-k8s-mysql
 spec:
   ports:
-    - name: http
-      port: 80
+    - nodePort: 30163 
+      port: 8080      
+      targetPort: 8080  
       protocol: TCP
-      targetPort: 8085
-  type: LoadBalancer
-  selector:
-    app: springboot-app
+  selector:           
+    app: springboot-k8s-mysql
+  type: NodePort       
+
+---
+apiVersion: apps/v1 
+kind: Deployment    
+metadata:              
+  name: springboot-k8s-mysql
+spec:                
+  selector:         
+    matchLabels:
+      app: springboot-k8s-mysql
+  replicas: 3        
+  template:
+    metadata:
+      labels:        
+        app: springboot-k8s-mysql
+    spec:
+      containers:
+        - name: springboot-k8s-mysql
+          image: swagatkm/springboot-k8s-deployment:latest
+          ports:
+            - containerPort: 8080                  
