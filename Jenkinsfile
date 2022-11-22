@@ -38,11 +38,22 @@ pipeline {
         }
 
         stage('Pushing to ECR: API') {
-            steps{
+            steps {
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     script {
                         sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 120761001082.dkr.ecr.us-east-2.amazonaws.com'
                         sh 'docker push 120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo:latest'
+                    }
+                }
+            }
+        }
+
+        stage('K8S Deploy') {
+            steps {
+                dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+                    script {
+                        withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
+                        sh ('kubectl apply -f  kubernetes/deployment.yaml')
                     }
                 }
             }
