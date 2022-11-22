@@ -17,8 +17,8 @@ pipeline {
         }
 
         stage ('Maven Build') {
-          steps {
-            dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+            steps {
+                dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     echo 'SpringBoot CRUD Application Maven Build'
                     sh "mvn clean install"
                     sh "mvn package"
@@ -27,7 +27,26 @@ pipeline {
             }
         }
 
+        stage('Building image') {
+            steps{
+                dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+                    script {
+                        dockerImage = docker.build registry
+                    }
+                }
+            }
+        }
+
+        stage('Building image') {
+            steps{
+                dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+                    script {
+                        sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin account_id.dkr.ecr.us-east-2.amazonaws.com'
+                        sh 'docker push account_id.dkr.ecr.us-east-2.amazonaws.com/my-docker-repo:latest'
+                    }
+                }
+            }
+        }
 
     }
-
 }
