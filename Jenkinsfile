@@ -53,7 +53,8 @@ pipeline {
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     script {
                         withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
-                        sh ('kubectl apply -f  kubernetes/deployment.yaml')
+                            sh ('kubectl apply -f  kubernetes/deployment.yaml')
+                        }
                     }
                 }
             }
