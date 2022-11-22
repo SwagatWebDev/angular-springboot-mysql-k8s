@@ -42,7 +42,7 @@ pipeline {
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     script {
                         sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 120761001082.dkr.ecr.us-east-2.amazonaws.com'
-                        sh 'docker push account_id.dkr.ecr.us-east-2.amazonaws.com/my-repo:latest'
+                        sh 'docker push 120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo:latest'
                     }
                 }
             }
