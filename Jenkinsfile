@@ -27,7 +27,7 @@ pipeline {
             }
         }
 
-        stage('Building image') {
+        stage('Building Docker Image: API') {
             steps{
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     script {
@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-        stage('Building image') {
+        stage('Pushing to ECR: API') {
             steps{
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     script {
