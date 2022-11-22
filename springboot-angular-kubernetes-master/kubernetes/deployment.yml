@@ -4,9 +4,9 @@ kind: Deployment
 
 # Data that helps  uniquely identify the object (using name, UID and namespace)
 metadata:
-  name: nginx
+  name: springboot-app
   labels:
-    app: nginx
+    app: springboot-app
 
 # What state you desire for the object
 spec:
