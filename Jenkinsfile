@@ -48,7 +48,7 @@ pipeline {
             }
         }
 
-        stage('K8S Deploy') {
+        stage('K8S Deploy: API') {
             steps {
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     script {
