@@ -27,7 +27,7 @@ spec:
         - name: springboot-app
           image: 120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo:latest
           ports:
-            - containerPort: 80
+            - containerPort: 8080
 
 ---
 apiVersion: v1
