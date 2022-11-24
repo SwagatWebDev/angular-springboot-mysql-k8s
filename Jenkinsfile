@@ -87,7 +87,7 @@ pipeline {
             dir("${env.WORKSPACE}/angular8-crud-demo-master") {
                 script {
                     withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
-                        sh ('kubectl apply -f deployment.yml')
+                        sh ('kubectl apply -f kubernetes/deployment.yml')
                         }
                     }
             }
