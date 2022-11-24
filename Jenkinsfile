@@ -28,7 +28,7 @@ pipeline {
             }
         }
 
-        stage ('Building Docker Image: UI') {
+        stage ('NPM Build and Building Docker Image: UI') {
             steps {
                 dir("${env.WORKSPACE}/angular8-crud-demo-master") {
                     script {
@@ -70,17 +70,29 @@ pipeline {
             }
         }
 
-//         stage('K8S Deploy: API') {
-//             steps {
-//                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
-//                     script {
-//                         withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
-//                             sh ('kubectl apply -f  kubernetes/deployment.yml')
-//                         }
-//                     }
-//                 }
-//             }
-//         }
+        stage('K8S Deploy: API') {
+            steps {
+                dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+                    script {
+                        withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
+                            sh ('kubectl apply -f kubernetes/deployment.yml')
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('K8S Deploy: UI') {
+        steps {
+            dir("${env.WORKSPACE}/angular8-crud-demo-master") {
+                script {
+                    withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
+                        sh ('kubectl apply -f deployment.yml')
+                        }
+                    }
+            }
+        }
+    }
 
     }
 }
