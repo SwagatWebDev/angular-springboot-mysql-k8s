@@ -28,7 +28,7 @@ pipeline {
             }
         }
 
-        stage ('NPM Build and Docker Image Build: UI') {
+        stage ('NPM Build and Building Docker Image: UI') {
             steps {
                 dir("${env.WORKSPACE}/angular8-crud-demo-master") {
                     script {
@@ -38,7 +38,7 @@ pipeline {
             }
         }
 
-        stage('Building Docker Image and Push ECR: API') {
+        stage('Building Docker Image: API') {
             steps{
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     script {
