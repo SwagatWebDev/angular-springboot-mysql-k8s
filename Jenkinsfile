@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        registry-api = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo",
+        registry-api = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo"
         registry-ui = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo-ui"
     }
 
@@ -17,16 +17,16 @@ pipeline {
             }
         }
 
-//         stage ('Maven Build: API') {
-//             steps {
-//                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
-//                     echo 'SpringBoot CRUD Application Maven Build'
-//                     sh "mvn clean install"
-//                     sh "mvn package"
-//                     archiveArtifacts 'target/*.jar'
-//                 }
-//             }
-//         }
+        stage ('Maven Build: API') {
+            steps {
+                dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+                    echo 'SpringBoot CRUD Application Maven Build'
+                    sh "mvn clean install"
+                    sh "mvn package"
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
 
         stage ('Building Docker Image: UI') {
             steps {
@@ -38,26 +38,26 @@ pipeline {
             }
         }
 
-//         stage('Building Docker Image: API') {
-//             steps{
-//                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
-//                     script {
-//                         dockerImage = docker.build registry-api
-//                     }
-//                 }
-//             }
-//         }
-//
-//         stage('Pushing to ECR: API') {
-//             steps {
-//                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
-//                     script {
-//                         sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 120761001082.dkr.ecr.us-east-2.amazonaws.com'
-//                         sh 'docker push 120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo:latest'
-//                     }
-//                 }
-//             }
-//         }
+        stage('Building Docker Image: API') {
+            steps{
+                dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+                    script {
+                        dockerImage = docker.build registry-api
+                    }
+                }
+            }
+        }
+
+        stage('Pushing to ECR: API') {
+            steps {
+                dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+                    script {
+                        sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 120761001082.dkr.ecr.us-east-2.amazonaws.com'
+                        sh 'docker push 120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo:latest'
+                    }
+                }
+            }
+        }
 
         stage('Pushing to ECR: UI') {
             steps {
