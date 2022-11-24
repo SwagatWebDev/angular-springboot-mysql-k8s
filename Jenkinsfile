@@ -6,7 +6,8 @@ pipeline {
     }
 
     environment {
-        registry = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo"
+        registry-api = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo"
+        registry-ui = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo-ui"
     }
 
     stages {
@@ -16,7 +17,7 @@ pipeline {
             }
         }
 
-        stage ('Maven Build') {
+        stage ('Maven Build: API') {
             steps {
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     echo 'SpringBoot CRUD Application Maven Build'
@@ -27,11 +28,21 @@ pipeline {
             }
         }
 
+        stage ('Building Docker Image: UI') {
+            steps {
+                dir("${env.WORKSPACE}/angular8-crud-demo-master") {
+                    script {
+                        demo = docker.build registry-ui
+                    }
+                }
+            }
+        }
+
         stage('Building Docker Image: API') {
             steps{
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     script {
-                        dockerImage = docker.build registry
+                        dockerImage = docker.build registry-api
                     }
                 }
             }
@@ -48,17 +59,28 @@ pipeline {
             }
         }
 
-        stage('K8S Deploy: API') {
+        stage('Pushing to ECR: UI') {
             steps {
-                dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+                dir("${env.WORKSPACE}/angular8-crud-demo-master") {
                     script {
-                        withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
-                            sh ('kubectl apply -f  kubernetes/deployment.yml')
-                        }
+                        sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 120761001082.dkr.ecr.us-east-2.amazonaws.com'
+                        sh 'docker push 120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo-ui:latest'
                     }
                 }
             }
         }
+
+//         stage('K8S Deploy: API') {
+//             steps {
+//                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
+//                     script {
+//                         withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
+//                             sh ('kubectl apply -f  kubernetes/deployment.yml')
+//                         }
+//                     }
+//                 }
+//             }
+//         }
 
     }
 }
