@@ -6,8 +6,8 @@ pipeline {
     }
 
     environment {
-        registry-api = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo"
-        registry-ui = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo-ui"
+        registryapi = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo"
+        registryui = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo-ui"
     }
 
     stages {
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 dir("${env.WORKSPACE}/angular8-crud-demo-master") {
                     script {
-                        demo = docker.build registry-ui
+                        demo = docker.build registryui
                     }
                 }
             }
@@ -42,7 +42,7 @@ pipeline {
             steps{
                 dir("${env.WORKSPACE}/springboot-angular-kubernetes-master") {
                     script {
-                        dockerImage = docker.build registry-api
+                        dockerImage = docker.build registryapi
                     }
                 }
             }
