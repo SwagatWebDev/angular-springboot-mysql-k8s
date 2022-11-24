@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        registry-api = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo"
+        registry-api = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo",
         registry-ui = "120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo-ui"
     }
 
