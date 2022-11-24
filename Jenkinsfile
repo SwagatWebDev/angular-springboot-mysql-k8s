@@ -28,7 +28,7 @@ pipeline {
             }
         }
 
-        stage ('NPM Build with Docker Image Push ECR: UI') {
+        stage ('NPM Build and Docker Image Build: UI') {
             steps {
                 dir("${env.WORKSPACE}/angular8-crud-demo-master") {
                     script {

@@ -15,9 +15,11 @@ spec:  # What state you desire for the object
       containers:
         - name: angular-k8s-deployment
           image: 120761001082.dkr.ecr.us-east-2.amazonaws.com/my-repo-ui
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
+              name: http
+              protocol: TCP
 ---
 apiVersion: v1
 kind: Service
