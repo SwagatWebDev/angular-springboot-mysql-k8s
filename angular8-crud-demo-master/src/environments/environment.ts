@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // baseUrl: 'http://localhost:8085'
-  baseUrl: 'http://a78e95ffbb55848eca13d053cc96db17-997059198.us-east-2.elb.amazonaws.com'
+  baseUrl: 'http://a0f6b528faa494f7b8f2f7ef86cf8050-12232815.us-east-2.elb.amazonaws.com'
 
 };
 
